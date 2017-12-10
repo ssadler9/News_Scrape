@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 
 // establishing the schema
 var Schema = mongoose.Schema;
+ObjectId = Schema.ObjectId;
 
 // creating the schema contructor for mongo
 var ArticleSchema = new Schema({

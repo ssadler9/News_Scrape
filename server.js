@@ -13,11 +13,14 @@ var PORT = ('3000');
 // initialize express
 var app = express();
 // setting up bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // using the public folder for static directory
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
-
+// Hook our mongoose config to the db var
+mongoose.connect("mongodb://localhost/cnnScraper_db", {
+  useMongoClient: true
+});
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
@@ -41,19 +44,19 @@ app.get('/scrape', function (req, res) {
 			var link = $(element).children('a').attr('href');
 			
 
-			// if (title && link) {
-			// 	db.scrapedData.insert({
-			// 		title: title,
-			// 		link: link
-			// 	},
-			// 	function(err, inserted) {
-			// 		if (err) {
-			// 			console.log(err);
-			// 		} else {
-			// 			console.log(inserted);
-			// 		}
-			// 	});
-			// }
+			if (title && link) {
+				db.Article.create({
+					title: title,
+					link: link
+				},
+				function(err, inserted) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(inserted);
+					}
+				});
+			}
 			results.push({
 				title: title,
 				link: link
@@ -62,7 +65,7 @@ app.get('/scrape', function (req, res) {
 		})
 		console.log(results);
 	});
-	res.send("Scrape Completed");
+	res.send('Scrape Successful')
 });
 
 

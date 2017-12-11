@@ -68,7 +68,10 @@ app.get('/scrape', function (req, res) {
 	res.send('Scrape Successful')
 });
 
-
+// Still to do:
+// Need to get data that's stored in collection articles to appear on the HTML
+// Create Notes section for users to leave notes
+// Store notes so users can see what all are saying about stories
 
 
 
